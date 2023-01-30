@@ -1,0 +1,15 @@
+cmake_minimum_required(VERSION 3.16)
+project(backend)
+message("Creating Backend Build Environment")
+
+set(PIPEWIRE_INCLUDE_DIR /usr/include/pipewire-0.3/pipewire)
+set(PIPEWIRE_SRC_DIR /home/vish/downloads/pipewire/builddir/src/pipewire)
+set(SOURCES main.cpp ${PIPEWIRE_INCLUDE_DIR}/pipewire.h ${PIPEWIRE_INCLUDE_DIR}/stream.h)
+add_executable(main main.cpp)
+add_library(pipewire ${PIPEWIRE_SRC_DIR})
+add_library(spa )
+set_target_properties(pipewire PROPERTIES LINKER_LANGUAGE CXX)
+target_include_directories(main PRIVATE ${PIPEWIRE_INCLUDE_DIR})
+set_target_properties(pipewire PROPERTIES IMPORTED_LOCATION ${PIPEWIRE_SRC_DIR}/libpipewire-0.3.so)
+
+target_link_libraries(main pipewire)
